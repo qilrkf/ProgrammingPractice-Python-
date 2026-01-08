@@ -331,6 +331,14 @@ def run_game_tick():
         if maze[nr][nc] != "#":
             player_row, player_col = nr, nc
 
+            if player_hit_monster(player_row, player_col, monsters):
+                if not game_over_played:
+                    pygame.mixer.music.stop()
+                    GAME_OVER_SOUND.play()
+                    game_over_played = True
+                state = GAME_OVER
+                return
+
             if maze[nr][nc] == ".":
                 maze[nr][nc] = " "
                 coins_left -= 1
